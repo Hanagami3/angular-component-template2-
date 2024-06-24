@@ -12,7 +12,13 @@ import { FormsModule } from '@angular/forms';
     imports: [ControlComponent, ButtonComponent, FormsModule]
 })
 export class NewTicketComponent {
-    onSubmit(){
-        console.log('SUBMITTED!')
+    onSubmit(title: string, ticketText: string){
+        console.log(title)
+        console.log(ticketText)
     }
+    // onSubmit(titleElement: HTMLInputElement){
+    //     //console.dir(titleElement)
+    //     const enteredTitle = titleElement.value
+    //     console.log('ENTERED TITLE: ' + enteredTitle)
+    // }
 }
