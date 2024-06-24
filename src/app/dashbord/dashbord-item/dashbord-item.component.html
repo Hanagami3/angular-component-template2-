@@ -1,0 +1,9 @@
+<article>
+    <header>
+        <!-- les [] offre la possibilité de créer du dynamisme -->
+        <img [src]="image().src" [alt]="image().src" />
+        <h2>{{ title() }}</h2>
+    </header>
+    <!-- It's a placeholder for the weapped content is also called "Content Projection" -->
+    <ng-content />
+</article>

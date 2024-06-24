@@ -1,0 +1,27 @@
+<!-- Pour utiliser du css dans une if condition mais seulement une une seul class
+<div [class.status]="currentStatus === 'online'">-->
+  <!-- Comme un y a un ('-' dash), il faut utiliser la les ' ' pour entouréer la propriété status-online -->
+  <div [class]="{
+    status: true,   
+    'status-online': currentStatus === 'online',
+    'status-offline': currentStatus === 'offline',
+    'status-unknown': currentStatus === 'unknown'
+  }">
+  <!-- [style.fontSize]="'64px'"
+  [style]="{ 
+    fontSize: '64px',
+  }"> -->
+  @if (currentStatus === 'online') {
+    <p>Servers are online</p>
+    <p>All systems are operational.</p>
+  } @else if (currentStatus === 'offline') {
+    <p>Servers are offline</p>
+    <p>Functionality should be restored soon.</p>
+  } @else {
+    <p>Server status is unknown</p>
+    <p>Fetching server status failed.</p>
+  }
+</div>
+
+
+

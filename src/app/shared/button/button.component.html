@@ -1,0 +1,14 @@
+<span>
+    <ng-content/>
+</span>
+<!-- Sans cela, avec plusieurs ng-content, angular ne sais pas quoi va ou et 
+ donc des ng-content sont vide quand on les inspect 
+ avec class ==> .icon mais avec ngProjectAs icon-->
+<span class="icon">
+    <!-- <ng-content select="icon"/> -->
+    <!-- possible depuis la dernière version d'angular
+     Pour choisir ce content si ng-content ne réussi pas à trouver un ngProjectAs
+    <ng-content select="icon">
+        →
+    </ng-content> -->
+</span>

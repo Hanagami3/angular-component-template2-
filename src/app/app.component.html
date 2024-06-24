@@ -1,0 +1,34 @@
+
+<app-header />
+
+<main>
+  <div id="dashboard">
+     <!-- Si [] on ne peut pas écrire directement le string que on veut 
+      car sinon angulare va chercher une variable qui se nomme comme ça et qui forcment n existe pas   
+      Mais ok si [] + " '' "-->
+    <app-dashbord-item 
+      [image]="{ src: 'status.png', alt: 'A signal symbol'}" 
+      title="Server Status"
+    >
+    <!-- Angular ignore tout contenu qu'il y a entre des tags de costom component 
+     car il ne sait pas ou le mettre acr dans le dashbord template il faut dire à angular ou mettre le main du component
+     ==> voir ng-content-->
+      <app-server-status />
+    </app-dashbord-item>
+    
+
+    <app-dashbord-item 
+      [image]="{ src: 'globe.png', alt: 'A signal symbol'}" 
+      title="A signal symbol"
+    >
+      <app-traffic />
+    </app-dashbord-item>
+    
+    <app-dashbord-item 
+      [image]="{ src: 'list.png', alt: 'A list of items'}" 
+      title="Support Tickets"
+    >
+      <app-tickets /> 
+    </app-dashbord-item>
+  </div>
+</main>
