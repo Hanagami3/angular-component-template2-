@@ -1,4 +1,4 @@
-import { Component, ElementRef, viewChild, ViewChildren, viewChildren } from '@angular/core';
+import { Component, ElementRef, Signal, EventEmitter, output, Output, viewChild, ViewChildren, viewChildren } from '@angular/core';
 import { ControlComponent } from "../../../shared/control/control.component";
 import { ButtonComponent } from '../../../shared/button/button.component';
 //Pour permettre ngSubmit dans l'html
@@ -19,16 +19,40 @@ export class NewTicketComponent {
     // @ViewChildren(ButtonComponent) buttons
     private form = viewChild.required<ElementRef<HTMLFormElement>>('form')
 
+    // @Output() add = new EventEmitter<{title: string, text: string}()>
+    add = output<{title: string, text: string}>()
 
-    // onSubmit(title: string, ticketText: string, form: HTMLFormElement){
+
+    //contrairement à afterviewInit, il y a pas de gaarentie qut l'élément de viewchild existe déjà
+    ngOnInit(){
+        console.log('ONINIT')
+        console.log(this.form().nativeElement)
+    }
+
+    //On a la garantie d'avoir accés à l'élément qui a été séléctionné avec view child
+    ngAfterViewInit(){
+        console.log('AFTER VIEW INIT')
+        console.log(this.form().nativeElement)
+    }
+
     onSubmit(title: string, ticketText: string){
-        console.log(title)
-        console.log(ticketText)
-        //reset les inputs
-        //nativeElement car à la base ElementRef qui est wrapper en HTMLFormElement
-        //this.form?.nativeElement.reset()
+        this.add.emit({title: title, text: ticketText })
         this.form().nativeElement.reset()
     }
+
+
+
+
+
+    // // onSubmit(title: string, ticketText: string, form: HTMLFormElement){
+    // onSubmit(title: string, ticketText: string){
+    //     console.log(title)
+    //     console.log(ticketText)
+    //     //reset les inputs
+    //     //nativeElement car à la base ElementRef qui est wrapper en HTMLFormElement
+    //     //this.form?.nativeElement.reset()
+    //     this.form().nativeElement.reset()
+    // }
     // onSubmit(titleElement: HTMLInputElement){
     //     //console.dir(titleElement)
     //     const enteredTitle = titleElement.value

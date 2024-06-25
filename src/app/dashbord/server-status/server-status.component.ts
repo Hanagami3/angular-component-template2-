@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { interval } from 'rxjs';
 
 @Component({
@@ -12,7 +12,8 @@ export class ServerStatusComponent implements OnInit, AfterViewInit /*, OnDestro
   // c'est bien d'être plus précis et donc de créer un type spécial qui ne peut prendre qu'une de ces trois valeurs
   // comme ça, si un problème de typing aec l'écriture, directement soulevé par l'ide
   // ==> Literal Types
-  currentStatus: 'online' | 'offline' | 'unknown' = 'offline';
+  // currentStatus: 'online' | 'offline' | 'unknown' = 'offline';
+  currentStatus = signal<'online' | 'offline' | 'unknown'>('offline');
  
   // Avec cela on peut créer un listener qui déclenchera une fonction peu importe le cnponent dans lequel on inject DestroyRef
   private destroyRef = inject(DestroyRef) 
@@ -24,7 +25,11 @@ export class ServerStatusComponent implements OnInit, AfterViewInit /*, OnDestro
 
 
   //constructorutilisé seulement pour y passer de simples classe mais pas pour des choses complexe (bad practice)
-  constructor(){}
+  constructor(){
+    effect(() => {
+    console.log(this.currentStatus())
+    })
+  }
   // c'est mieux d'utiliser ngOnInit pour initialiser le travail comme setting up this interval
   //>< au contstructor, Angular is done initialzing the component
   // donc si mon component reçoi des valeur entrée, ces valeur seront initialisée
@@ -33,12 +38,20 @@ export class ServerStatusComponent implements OnInit, AfterViewInit /*, OnDestro
     //this.interval = setInterval(() => {
     const interval = setInterval(() => {
       const rnd = Math.random(); // 0 - 0,999999...
+    //   if (rnd < 0.5) {
+    //     this.currentStatus = 'online'
+    //   } else if (rnd > 0.9) {
+    //     this.currentStatus = 'offline'
+    //   } else {
+    //     this.currentStatus = 'unknown'
+    //   }
+    // }, 5000)
       if (rnd < 0.5) {
-        this.currentStatus = 'online'
+        this.currentStatus.set('online')
       } else if (rnd > 0.9) {
-        this.currentStatus = 'offline'
+        this.currentStatus.set('offline')
       } else {
-        this.currentStatus = 'unknown'
+        this.currentStatus.set('unknown')
       }
     }, 5000)
     this.destroyRef.onDestroy(() =>{

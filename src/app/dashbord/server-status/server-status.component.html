@@ -3,18 +3,18 @@
   <!-- Comme un y a un ('-' dash), il faut utiliser la les ' ' pour entouréer la propriété status-online -->
   <div [class]="{
     status: true,   
-    'status-online': currentStatus === 'online',
-    'status-offline': currentStatus === 'offline',
-    'status-unknown': currentStatus === 'unknown'
+    'status-online': currentStatus() === 'online',
+    'status-offline': currentStatus() === 'offline',
+    'status-unknown': currentStatus() === 'unknown'
   }">
   <!-- [style.fontSize]="'64px'"
   [style]="{ 
     fontSize: '64px',
   }"> -->
-  @if (currentStatus === 'online') {
+  @if (currentStatus() === 'online') {
     <p>Servers are online</p>
     <p>All systems are operational.</p>
-  } @else if (currentStatus === 'offline') {
+  } @else if (currentStatus() === 'offline') {
     <p>Servers are offline</p>
     <p>Functionality should be restored soon.</p>
   } @else {
